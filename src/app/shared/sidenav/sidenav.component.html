@@ -1,0 +1,52 @@
+<!-- Botón hamburguesa visible solo en móviles -->
+<button class="btn btn-primary d-lg-none m-2" (click)="toggleSidebar()">
+  <i class="bi bi-list"></i>
+</button>
+
+<div class="d-flex">
+  <!-- Sidebar -->
+  <nav *ngIf="sidebarOpen" id="sidebar" class="bg-primary text-white p-3 vh-100">
+    <!-- Título -->
+    <div class="sidebar-title mb-4 text-center border-bottom pb-2">
+      Directorio Web
+    </div>
+
+    <!-- Acordeón de Configuraciones -->
+    <div class="accordion" id="sidenavAccordion">
+      <div class="accordion-item bg-primary border-0">
+        <h2 class="accordion-header" id="headingConfig">
+          <button class="accordion-button collapsed bg-primary text-white fw-bold" type="button"
+            data-bs-toggle="collapse" data-bs-target="#collapseConfig" aria-expanded="false"
+            aria-controls="collapseConfig">
+            <i class="bi bi-gear me-2"></i> Configuraciones
+          </button>
+        </h2>
+        <div id="collapseConfig" class="accordion-collapse collapse" aria-labelledby="headingConfig"
+          data-bs-parent="#sidenavAccordion">
+          <div class="accordion-body ps-4">
+            <ul class="nav flex-column">
+              <li class="nav-item"><a routerLink="/configuracion/provincias" class="nav-link text-white ps-3">Provincias</a></li>
+              <li class="nav-item"><a routerLink="/configuracion/organismos" class="nav-link text-white ps-3">Organismos</a></li>
+              <li class="nav-item"><a routerLink="/configuracion/instituciones" class="nav-link text-white ps-3">Instituciones</a></li>
+              <li class="nav-item"><a routerLink="/configuracion/tematicas" class="nav-link text-white ps-3">Temáticas</a></li>
+              <li class="nav-item"><a routerLink="/configuracion/tipos-de-sitios" class="nav-link text-white ps-3">Tipos de Sitio</a></li>
+              <li class="nav-item"><a routerLink="/configuracion/alcances" class="nav-link text-white ps-3">Alcances</a></li>
+              <li class="nav-item"><a routerLink="/configuracion/reglas-por-dominio" class="nav-link text-white ps-3">Reglas por Dominio</a></li>
+              <li class="nav-item"><a routerLink="/configuracion/causas" class="nav-link text-white ps-3">Causas</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón flotante -->
+    <button class="btn btn-light rounded-circle float-btn mt-auto ms-auto me-2">
+      <i class="bi bi-plus-lg"></i>
+    </button>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="content flex-grow-1 p-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>
