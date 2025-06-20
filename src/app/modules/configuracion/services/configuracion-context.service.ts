@@ -23,6 +23,25 @@ export class ConfiguracionContextService {
     }
   ];
 
+  private causas = [
+    {
+      id: 1,
+      titulo: 'Fallo técnico',
+      descripcion: 'Problema con el servidor DNS',
+      fechaModificacion: new Date('2025-06-15T11:00:00'),
+      ultimousuario: 'admin',
+      estado: true
+    },
+    {
+      id: 2,
+      titulo: 'Actualización programada',
+      descripcion: 'Mantenimiento mensual del sistema',
+      fechaModificacion: new Date('2025-06-10T08:45:00'),
+      ultimousuario: 'editor1',
+      estado: false
+    }
+  ];
+
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   getSubcategoriaActual(): string | null {
@@ -38,9 +57,8 @@ export class ConfiguracionContextService {
   }
 
   // ===== MÉTODOS PARA ALCANCES =====
-
   getAlcances() {
-    return [...this.alcances]; // se devuelve una copia para evitar mutación externa
+    return [...this.alcances];
   }
 
   createAlcance(data: any) {
@@ -82,6 +100,54 @@ export class ConfiguracionContextService {
     if (alcance) {
       alcance.estado = !alcance.estado;
       return alcance.estado;
+    }
+    return null;
+  }
+
+  // ===== MÉTODOS PARA CAUSAS =====
+  getCausas() {
+    return [...this.causas];
+  }
+
+  createCausa(data: any) {
+    const nuevoId = this.causas.length ? Math.max(...this.causas.map(i => i.id)) + 1 : 1;
+    const nueva = {
+      ...data,
+      id: nuevoId,
+      fechaModificacion: new Date(),
+      ultimousuario: 'admin'
+    };
+    this.causas.push(nueva);
+    return nueva;
+  }
+
+  updateCausa(data: any) {
+    const index = this.causas.findIndex(c => c.id === data.id);
+    if (index !== -1) {
+      this.causas[index] = {
+        ...this.causas[index],
+        ...data,
+        fechaModificacion: new Date()
+      };
+      return this.causas[index];
+    }
+    return null;
+  }
+
+  deleteCausa(id: number) {
+    const index = this.causas.findIndex(c => c.id === id);
+    if (index !== -1) {
+      this.causas.splice(index, 1);
+      return true;
+    }
+    return false;
+  }
+
+  toggleEstadoCausa(id: number) {
+    const causa = this.causas.find(c => c.id === id);
+    if (causa) {
+      causa.estado = !causa.estado;
+      return causa.estado;
     }
     return null;
   }

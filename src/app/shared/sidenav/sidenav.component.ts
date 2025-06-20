@@ -4,9 +4,13 @@ import { NgIf } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { filter } from 'rxjs/operators';
 
+import { ConfiguracionContextService } from '../../modules/configuracion/services/configuracion-context.service';
+
 // Formularios de subcategorías
 import { AlcanceFormDialogComponent } from '../../modules/configuracion/alcances/alcance-form-dialog/alcance-form-dialog.component';
-import { ProvinciaFormDialogComponent } from '../../modules/configuracion/provinciass/provincia-form-dialog/provincia-form-dialog.component'; 
+import { ProvinciaFormDialogComponent } from '../../modules/configuracion/provincias/provincia-form-dialog/provincia-form-dialog.component';
+import { CausaFormDialogComponent } from '../../modules/configuracion/causas/causa-form-dialog/causa-form-dialog.component';
+
 @Component({
   selector: 'app-sidenav',
   standalone: true,
@@ -18,7 +22,11 @@ export class SidenavComponent {
   sidebarOpen = true;
   currentSubcategory: string | null = null;
 
-  constructor(private router: Router, private dialog: MatDialog) {
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private context: ConfiguracionContextService
+  ) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => this.detectSubcategory());
@@ -48,8 +56,9 @@ export class SidenavComponent {
           width: '400px',
           data: { modoCreacion: true }
         }).afterClosed().subscribe(result => {
-          if (result) {
-            alert('Nuevo alcance creado correctamente');
+          if (result && result.nombre?.trim()) {
+            const creado = this.context.createAlcance(result);
+            alert(`Nuevo alcance creado (ID: ${creado.id})`);
           }
         });
         break;
@@ -59,8 +68,31 @@ export class SidenavComponent {
           width: '400px',
           data: { modoCreacion: true }
         }).afterClosed().subscribe(result => {
-          if (result) {
+          if (result && result.nombre?.trim()) {
+            // Agrega aquí el método correspondiente cuando se implemente en el servicio
             alert('Nueva provincia creada correctamente');
+          }
+        });
+        break;
+
+      case 'causas':
+        this.dialog.open(CausaFormDialogComponent, {
+          width: '450px',
+          data: {
+            modoCreacion: true,
+            causa: {
+              id: null,
+              titulo: '',
+              descripcion: '',
+              fechaModificacion: null,
+              ultimousuario: '',
+              estado: true
+            }
+          }
+        }).afterClosed().subscribe(result => {
+          if (result && result.titulo?.trim()) {
+            const creada = this.context.createCausa(result);
+            alert(`Nueva causa creada (ID: ${creada.id})`);
           }
         });
         break;
