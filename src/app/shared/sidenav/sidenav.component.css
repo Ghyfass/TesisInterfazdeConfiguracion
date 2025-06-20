@@ -4,6 +4,7 @@
   width: 250px;
   font-family: 'Inter', sans-serif;
   overflow-y: auto;
+  /* No cambio ni agrego fondo ni color para respetar tu diseño */
 }
 
 .sidebar-title {
@@ -13,6 +14,7 @@
 
 .accordion-button::after {
   transition: transform 0.3s ease;
+  color: #fff; /* para que la flecha sea visible en fondo oscuro */
 }
 
 .accordion-button.collapsed::after {
@@ -25,7 +27,7 @@
 
 /* Color Palenight (estilo VSCode Theme) */
 .bg-palenight {
-  background-color: #292D3E; /* tono base púrpura oscuro */
+  background-color: #24293f; /* tono base púrpura oscuro */
   color: #ffffff;
 }
 
@@ -43,6 +45,16 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
   color: #fff;
   z-index: 1050;
+  border-radius: 50%; /* un poco más amigable */
+  cursor: pointer; /* indica que es clickeable */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.25s ease;
+}
+
+.global-float-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 /* Responsivo */

@@ -24,6 +24,7 @@ export class TablaDinamicaComponent {
 
   @Output() editar = new EventEmitter<any>();
   @Output() toggleEstado = new EventEmitter<any>();
+  @Output() eliminar = new EventEmitter<any>();
 
   onEditar(element: any) {
     this.editar.emit(element);
@@ -31,5 +32,22 @@ export class TablaDinamicaComponent {
 
   onToggleEstado(element: any) {
     this.toggleEstado.emit(element);
+  }
+
+  onEliminar(element: any) {
+  this.eliminar.emit(element);
+}
+
+  getNombreColumna(col: string): string {
+    switch (col) {
+      case 'id': return 'ID';
+      case 'nombre': return 'Nombre';
+      case 'descripcion': return 'Descripción';
+      case 'fechaModificacion': return 'Fecha de Modificación';
+      case 'usuarioModificacion': return 'ID Usuario';
+      case 'estado': return 'Estado';
+      case 'acciones': return 'Acciones';
+      default: return col;
+    }
   }
 }

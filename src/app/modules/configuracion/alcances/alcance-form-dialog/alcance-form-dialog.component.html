@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>{{ modoCreacion ? 'Crear Alcance' : 'Editar Alcance' }}</h2>
+
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="alcanceData.nombre" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>Usuario Modificación</mat-label>
+    <input matInput [(ngModel)]="alcanceData.usuarioModificacion" />
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions class="d-flex justify-content-end">
+  <button mat-button (click)="cerrar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
+</div>

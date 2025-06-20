@@ -6,12 +6,10 @@
 <div class="d-flex">
   <!-- Sidebar -->
   <nav *ngIf="sidebarOpen" id="sidebar" class="bg-palenight text-white p-3 vh-100">
-    <!-- Título -->
     <div class="sidebar-title mb-4 text-center border-bottom pb-2">
       Directorio Web
     </div>
 
-    <!-- Acordeón de Configuraciones -->
     <div class="accordion" id="sidenavAccordion">
       <div class="accordion-item bg-palenight border-0">
         <h2 class="accordion-header" id="headingConfig">
@@ -46,7 +44,11 @@
   </div>
 </div>
 
-<!-- Botón flotante fuera del sidebar, en esquina inferior derecha global -->
-<button class="btn btn-light rounded-circle global-float-btn">
+<!-- Botón flotante global -->
+<button
+  class="btn btn-light rounded-circle shadow"
+  style="position: fixed; bottom: 20px; right: 20px; z-index: 1050;"
+  (click)="abrirFormularioCrear()"
+>
   <i class="bi bi-plus-lg"></i>
 </button>
