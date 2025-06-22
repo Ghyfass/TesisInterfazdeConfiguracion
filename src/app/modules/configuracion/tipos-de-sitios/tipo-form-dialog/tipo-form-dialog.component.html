@@ -1,1 +1,20 @@
-<p>tipo-form-dialog works!</p>
+<h2 mat-dialog-title>{{ data.modoCreacion ? 'Crear tipo de sitio' : 'Editar tipo de sitio' }}</h2>
+
+<div mat-dialog-content>
+  <form>
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="data.tipo.nombre" name="nombre" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100 mb-3">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput [(ngModel)]="data.tipo.descripcion" name="descripcion" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="guardar()" [disabled]="!data.tipo.nombre?.trim()">Guardar</button>
+</div>

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConfiguracionContextService {
   // Datos simulados para alcances
@@ -13,36 +13,37 @@ export class ConfiguracionContextService {
       nombre: 'Alcance 1',
       fechaModificacion: new Date('2025-06-18T15:30:00'),
       usuarioModificacion: '#123',
-      estado: true
+      estado: true,
     },
     {
       id: 2,
       nombre: 'Alcance 2',
       fechaModificacion: new Date('2025-06-17T10:20:00'),
       usuarioModificacion: '#456',
-      estado: false
-    }
+      estado: false,
+    },
   ];
+  // Datos simulados para tipos de sitios
+
   // Datos simulados para tematicas
   private tematicas = [
-  {
-    id: 1,
-    nombre: 'Salud',
-    descripcion: 'Temas relacionados con la salud pública',
-    fechaModificacion: new Date('2025-06-20T11:00:00'),
-    ultimousuario: '#123',
-    estado: true
-  },
-  {
-    id: 2,
-    nombre: 'Tecnología',
-    descripcion: 'Temas sobre avances tecnológicos',
-    fechaModificacion: new Date('2025-06-19T15:30:00'),
-    ultimousuario: '#456',
-    estado: false
-  }
-];
-
+    {
+      id: 1,
+      nombre: 'Salud',
+      descripcion: 'Temas relacionados con la salud pública',
+      fechaModificacion: new Date('2025-06-20T11:00:00'),
+      ultimousuario: '#123',
+      estado: true,
+    },
+    {
+      id: 2,
+      nombre: 'Tecnología',
+      descripcion: 'Temas sobre avances tecnológicos',
+      fechaModificacion: new Date('2025-06-19T15:30:00'),
+      ultimousuario: '#456',
+      estado: false,
+    },
+  ];
 
   // Datos simulados para causas
   private causas = [
@@ -52,7 +53,7 @@ export class ConfiguracionContextService {
       descripcion: 'Problema con el servidor DNS',
       fechaModificacion: new Date('2025-06-15T11:00:00'),
       ultimousuario: '#123',
-      estado: true
+      estado: true,
     },
     {
       id: 2,
@@ -60,8 +61,8 @@ export class ConfiguracionContextService {
       descripcion: 'Mantenimiento mensual del sistema',
       fechaModificacion: new Date('2025-06-10T08:45:00'),
       ultimousuario: '#456',
-      estado: false
-    }
+      estado: false,
+    },
   ];
 
   // Datos simulados para instituciones
@@ -73,7 +74,7 @@ export class ConfiguracionContextService {
       descripcion: 'Entidad de investigación en salud pública',
       fechaModificacion: new Date('2025-06-16T14:30:00'),
       ultimousuario: '#123',
-      estado: true
+      estado: true,
     },
     {
       id: 2,
@@ -82,8 +83,8 @@ export class ConfiguracionContextService {
       descripcion: 'Formación universitaria en áreas tecnológicas',
       fechaModificacion: new Date('2025-06-14T09:10:00'),
       ultimousuario: '#456',
-      estado: false
-    }
+      estado: false,
+    },
   ];
 
   // Datos simulados para organismos
@@ -94,7 +95,7 @@ export class ConfiguracionContextService {
       descripcion: 'Descripción del Organismo A',
       fechaModificacion: new Date('2025-06-20T12:00:00'),
       ultimousuario: '#123',
-      estado: true
+      estado: true,
     },
     {
       id: 2,
@@ -102,8 +103,8 @@ export class ConfiguracionContextService {
       descripcion: 'Descripción del Organismo B',
       fechaModificacion: new Date('2025-06-19T09:30:00'),
       ultimousuario: '#456',
-      estado: false
-    }
+      estado: false,
+    },
   ];
 
   // Datos simulados para provincias (nuevo)
@@ -115,8 +116,7 @@ export class ConfiguracionContextService {
       fechaModificacion: new Date('2025-06-19T13:00:00'),
       ultimoUsuario: '#123',
       ultimousuario: '#456',
-      estado: true
-
+      estado: true,
     },
     {
       id: 2,
@@ -124,38 +124,58 @@ export class ConfiguracionContextService {
       codigo: '#02',
       fechaModificacion: new Date('2025-06-18T09:30:00'),
       ultimousuario: '#457',
-      estado: false
-    }
+      estado: false,
+    },
+  ];
+  // Datos simulados para provincias
+  private tiposDeSitio: any[] = [
+    {
+      id: 1,
+      nombre: 'Portal institucional',
+      descripcion: 'Sitio web principal de la institución',
+      fechaModificacion: new Date('2025-06-15T10:00:00'),
+      ultimousuario: '#123',
+      estado: true,
+    },
+    {
+      id: 2,
+      nombre: 'Blog temático',
+      descripcion: 'Sitio web con contenidos especializados por tema',
+      fechaModificacion: new Date('2025-06-14T14:45:00'),
+      ultimousuario: '#456',
+      estado: false,
+    },
   ];
   private reglasPorDominio: any[] = [
-  {
-    id: 1,
-    nombre: 'Regla HTTP',
-    descripcion: 'Bloqueo de puertos HTTP inseguros',
-    fechaModificacion: new Date('2025-06-20T10:00:00'),
-    ultimousuario: '#123',
-    estado: true
-  },
-  {
-    id: 2,
-    nombre: 'Regla HTTPS',
-    descripcion: 'Permitir solo conexiones cifradas',
-    fechaModificacion: new Date('2025-06-19T09:30:00'),
-    ultimousuario: '#456',
-    estado: false
-  }
-];
-
+    {
+      id: 1,
+      nombre: 'Regla HTTP',
+      descripcion: 'Bloqueo de puertos HTTP inseguros',
+      fechaModificacion: new Date('2025-06-20T10:00:00'),
+      ultimousuario: '#123',
+      estado: true,
+    },
+    {
+      id: 2,
+      nombre: 'Regla HTTPS',
+      descripcion: 'Permitir solo conexiones cifradas',
+      fechaModificacion: new Date('2025-06-19T09:30:00'),
+      ultimousuario: '#456',
+      estado: false,
+    },
+  ];
 
   // BehaviorSubjects para observables reactivos
   private alcancesSubject = new BehaviorSubject(this.alcances);
-  private reglasPorDominioSubject = new BehaviorSubject<any[]>([...this.reglasPorDominio]);
+  private reglasPorDominioSubject = new BehaviorSubject<any[]>([
+    ...this.reglasPorDominio,
+  ]);
   private causasSubject = new BehaviorSubject(this.causas);
   private institucionesSubject = new BehaviorSubject(this.instituciones);
   private organismosSubject = new BehaviorSubject(this.organismos);
   private provinciasSubject = new BehaviorSubject(this.provincias); // nuevo BehaviorSubject
   private tematicasSubject = new BehaviorSubject<any[]>([...this.tematicas]);
-
+  private tiposDeSitioSubject = new BehaviorSubject<any[]>(this.tiposDeSitio);
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   getSubcategoriaActual(): string | null {
@@ -176,12 +196,14 @@ export class ConfiguracionContextService {
   }
 
   createAlcance(data: any) {
-    const nuevoId = this.alcances.length ? Math.max(...this.alcances.map(i => i.id)) + 1 : 1;
+    const nuevoId = this.alcances.length
+      ? Math.max(...this.alcances.map((i) => i.id)) + 1
+      : 1;
     const nuevo = {
       ...data,
       id: nuevoId,
       fechaModificacion: new Date(),
-      usuarioModificacion: '#999'  // simulamos ID usuario
+      usuarioModificacion: '#999', // simulamos ID usuario
     };
     this.alcances.push(nuevo);
     this.alcancesSubject.next([...this.alcances]);
@@ -189,13 +211,13 @@ export class ConfiguracionContextService {
   }
 
   updateAlcance(data: any) {
-    const index = this.alcances.findIndex(a => a.id === data.id);
+    const index = this.alcances.findIndex((a) => a.id === data.id);
     if (index !== -1) {
       this.alcances[index] = {
         ...this.alcances[index],
         ...data,
         fechaModificacion: new Date(),
-        usuarioModificacion: '#999'  // simulamos ID usuario
+        usuarioModificacion: '#999', // simulamos ID usuario
       };
       this.alcancesSubject.next([...this.alcances]);
       return this.alcances[index];
@@ -204,7 +226,7 @@ export class ConfiguracionContextService {
   }
 
   deleteAlcance(id: number) {
-    const index = this.alcances.findIndex(a => a.id === id);
+    const index = this.alcances.findIndex((a) => a.id === id);
     if (index !== -1) {
       this.alcances.splice(index, 1);
       this.alcancesSubject.next([...this.alcances]);
@@ -214,7 +236,7 @@ export class ConfiguracionContextService {
   }
 
   toggleEstadoAlcance(id: number) {
-    const alcance = this.alcances.find(a => a.id === id);
+    const alcance = this.alcances.find((a) => a.id === id);
     if (alcance) {
       alcance.estado = !alcance.estado;
       this.alcancesSubject.next([...this.alcances]);
@@ -222,58 +244,106 @@ export class ConfiguracionContextService {
     }
     return null;
   }
+  // ===== MÉTODOS PARA ALCANCES =====
+
   // ===== MÉTODOS PARA TEMÁTICAS =====
-getTematicas(): Observable<any[]> {
-  return this.tematicasSubject.asObservable();
-}
+  getTematicas(): Observable<any[]> {
+    return this.tematicasSubject.asObservable();
+  }
 
-createTematica(data: any) {
-  const nuevoId = this.tematicas.length ? Math.max(...this.tematicas.map(i => i.id)) + 1 : 1;
-  const nueva = {
-    ...data,
-    id: nuevoId,
-    fechaModificacion: new Date(),
-    ultimousuario: '#999'  // simulamos ID usuario
-  };
-  this.tematicas.push(nueva);
-  this.tematicasSubject.next([...this.tematicas]);
-  return nueva;
-}
-
-updateTematica(data: any) {
-  const index = this.tematicas.findIndex(t => t.id === data.id);
-  if (index !== -1) {
-    this.tematicas[index] = {
-      ...this.tematicas[index],
+  createTematica(data: any) {
+    const nuevoId = this.tematicas.length
+      ? Math.max(...this.tematicas.map((i) => i.id)) + 1
+      : 1;
+    const nueva = {
       ...data,
+      id: nuevoId,
       fechaModificacion: new Date(),
-      ultimousuario: '#999'
+      ultimousuario: '#999', // simulamos ID usuario
     };
+    this.tematicas.push(nueva);
     this.tematicasSubject.next([...this.tematicas]);
-    return this.tematicas[index];
+    return nueva;
   }
-  return null;
-}
 
-deleteTematica(id: number) {
-  const index = this.tematicas.findIndex(t => t.id === id);
-  if (index !== -1) {
-    this.tematicas.splice(index, 1);
-    this.tematicasSubject.next([...this.tematicas]);
-    return true;
+  updateTematica(data: any) {
+    const index = this.tematicas.findIndex((t) => t.id === data.id);
+    if (index !== -1) {
+      this.tematicas[index] = {
+        ...this.tematicas[index],
+        ...data,
+        fechaModificacion: new Date(),
+        ultimousuario: '#999',
+      };
+      this.tematicasSubject.next([...this.tematicas]);
+      return this.tematicas[index];
+    }
+    return null;
   }
-  return false;
-}
 
-toggleEstadoTematica(id: number) {
-  const tematica = this.tematicas.find(t => t.id === id);
-  if (tematica) {
-    tematica.estado = !tematica.estado;
-    this.tematicasSubject.next([...this.tematicas]);
-    return tematica.estado;
+  deleteTematica(id: number) {
+    const index = this.tematicas.findIndex((t) => t.id === id);
+    if (index !== -1) {
+      this.tematicas.splice(index, 1);
+      this.tematicasSubject.next([...this.tematicas]);
+      return true;
+    }
+    return false;
   }
-  return null;
-}
+
+  toggleEstadoTematica(id: number) {
+    const tematica = this.tematicas.find((t) => t.id === id);
+    if (tematica) {
+      tematica.estado = !tematica.estado;
+      this.tematicasSubject.next([...this.tematicas]);
+      return tematica.estado;
+    }
+    return null;
+  }
+  // ===== MÉTODOS PARA TIPOS DE SITIO =====
+  // Obtener todos los tipos de sitio
+  getTiposDeSitio(): Observable<any[]> {
+    return this.tiposDeSitioSubject.asObservable();
+  }
+
+  // Crear un nuevo tipo de sitio
+  createTipoDeSitio(tipo: any): void {
+    const nuevo = { ...tipo, id: this.generarNuevoId() };
+    this.tiposDeSitio.push(nuevo);
+    this.tiposDeSitioSubject.next(this.tiposDeSitio);
+  }
+
+  // Actualizar un tipo de sitio existente
+  updateTipoDeSitio(tipoActualizado: any): void {
+    const index = this.tiposDeSitio.findIndex(
+      (t) => t.id === tipoActualizado.id
+    );
+    if (index > -1) {
+      this.tiposDeSitio[index] = { ...tipoActualizado };
+      this.tiposDeSitioSubject.next(this.tiposDeSitio);
+    }
+  }
+
+  // Eliminar un tipo de sitio
+  deleteTipoDeSitio(id: number): void {
+    this.tiposDeSitio = this.tiposDeSitio.filter((t) => t.id !== id);
+    this.tiposDeSitioSubject.next(this.tiposDeSitio);
+  }
+
+  // Cambiar estado (toggle) de un tipo de sitio
+  toggleEstadoTipoDeSitio(id: number): void {
+    const tipo = this.tiposDeSitio.find((t) => t.id === id);
+    if (tipo) {
+      tipo.estado = !tipo.estado;
+      this.tiposDeSitioSubject.next(this.tiposDeSitio);
+    }
+  }
+
+  // Utilidad para generar nuevo ID incremental
+  private generarNuevoId(): number {
+    const ids = this.tiposDeSitio.map((t) => t.id);
+    return ids.length > 0 ? Math.max(...ids) + 1 : 1;
+  }
 
   // ===== MÉTODOS PARA CAUSAS =====
   getCausas(): Observable<any[]> {
@@ -281,12 +351,14 @@ toggleEstadoTematica(id: number) {
   }
 
   createCausa(data: any) {
-    const nuevoId = this.causas.length ? Math.max(...this.causas.map(i => i.id)) + 1 : 1;
+    const nuevoId = this.causas.length
+      ? Math.max(...this.causas.map((i) => i.id)) + 1
+      : 1;
     const nueva = {
       ...data,
       id: nuevoId,
       fechaModificacion: new Date(),
-      ultimousuario: '#999'  // simulamos ID usuario
+      ultimousuario: '#999', // simulamos ID usuario
     };
     this.causas.push(nueva);
     this.causasSubject.next([...this.causas]);
@@ -294,13 +366,13 @@ toggleEstadoTematica(id: number) {
   }
 
   updateCausa(data: any) {
-    const index = this.causas.findIndex(c => c.id === data.id);
+    const index = this.causas.findIndex((c) => c.id === data.id);
     if (index !== -1) {
       this.causas[index] = {
         ...this.causas[index],
         ...data,
         fechaModificacion: new Date(),
-        ultimousuario: '#999'  // simulamos ID usuario
+        ultimousuario: '#999', // simulamos ID usuario
       };
       this.causasSubject.next([...this.causas]);
       return this.causas[index];
@@ -309,7 +381,7 @@ toggleEstadoTematica(id: number) {
   }
 
   deleteCausa(id: number) {
-    const index = this.causas.findIndex(c => c.id === id);
+    const index = this.causas.findIndex((c) => c.id === id);
     if (index !== -1) {
       this.causas.splice(index, 1);
       this.causasSubject.next([...this.causas]);
@@ -319,7 +391,7 @@ toggleEstadoTematica(id: number) {
   }
 
   toggleEstadoCausa(id: number) {
-    const causa = this.causas.find(c => c.id === id);
+    const causa = this.causas.find((c) => c.id === id);
     if (causa) {
       causa.estado = !causa.estado;
       this.causasSubject.next([...this.causas]);
@@ -334,12 +406,14 @@ toggleEstadoTematica(id: number) {
   }
 
   createInstitucion(data: any) {
-    const nuevoId = this.instituciones.length ? Math.max(...this.instituciones.map(i => i.id)) + 1 : 1;
+    const nuevoId = this.instituciones.length
+      ? Math.max(...this.instituciones.map((i) => i.id)) + 1
+      : 1;
     const nueva = {
       ...data,
       id: nuevoId,
       fechaModificacion: new Date(),
-      ultimousuario: '#999'  // simulamos ID usuario
+      ultimousuario: '#999', // simulamos ID usuario
     };
     this.instituciones.push(nueva);
     this.institucionesSubject.next([...this.instituciones]);
@@ -347,13 +421,13 @@ toggleEstadoTematica(id: number) {
   }
 
   updateInstitucion(data: any) {
-    const index = this.instituciones.findIndex(i => i.id === data.id);
+    const index = this.instituciones.findIndex((i) => i.id === data.id);
     if (index !== -1) {
       this.instituciones[index] = {
         ...this.instituciones[index],
         ...data,
         fechaModificacion: new Date(),
-        ultimousuario: '#999'  // simulamos ID usuario
+        ultimousuario: '#999', // simulamos ID usuario
       };
       this.institucionesSubject.next([...this.instituciones]);
       return this.instituciones[index];
@@ -362,7 +436,7 @@ toggleEstadoTematica(id: number) {
   }
 
   deleteInstitucion(id: number) {
-    const index = this.instituciones.findIndex(i => i.id === id);
+    const index = this.instituciones.findIndex((i) => i.id === id);
     if (index !== -1) {
       this.instituciones.splice(index, 1);
       this.institucionesSubject.next([...this.instituciones]);
@@ -372,7 +446,7 @@ toggleEstadoTematica(id: number) {
   }
 
   toggleEstadoInstitucion(id: number) {
-    const institucion = this.instituciones.find(i => i.id === id);
+    const institucion = this.instituciones.find((i) => i.id === id);
     if (institucion) {
       institucion.estado = !institucion.estado;
       this.institucionesSubject.next([...this.instituciones]);
@@ -387,12 +461,14 @@ toggleEstadoTematica(id: number) {
   }
 
   createOrganismo(data: any) {
-    const nuevoId = this.organismos.length ? Math.max(...this.organismos.map(i => i.id)) + 1 : 1;
+    const nuevoId = this.organismos.length
+      ? Math.max(...this.organismos.map((i) => i.id)) + 1
+      : 1;
     const nuevo = {
       ...data,
       id: nuevoId,
       fechaModificacion: new Date(),
-      ultimousuario: '#999'  // simulamos ID usuario
+      ultimousuario: '#999', // simulamos ID usuario
     };
     this.organismos.push(nuevo);
     this.organismosSubject.next([...this.organismos]);
@@ -400,13 +476,13 @@ toggleEstadoTematica(id: number) {
   }
 
   updateOrganismo(data: any) {
-    const index = this.organismos.findIndex(o => o.id === data.id);
+    const index = this.organismos.findIndex((o) => o.id === data.id);
     if (index !== -1) {
       this.organismos[index] = {
         ...this.organismos[index],
         ...data,
         fechaModificacion: new Date(),
-        ultimousuario: '#999'  // simulamos ID usuario
+        ultimousuario: '#999', // simulamos ID usuario
       };
       this.organismosSubject.next([...this.organismos]);
       return this.organismos[index];
@@ -415,7 +491,7 @@ toggleEstadoTematica(id: number) {
   }
 
   deleteOrganismo(id: number) {
-    const index = this.organismos.findIndex(o => o.id === id);
+    const index = this.organismos.findIndex((o) => o.id === id);
     if (index !== -1) {
       this.organismos.splice(index, 1);
       this.organismosSubject.next([...this.organismos]);
@@ -425,7 +501,7 @@ toggleEstadoTematica(id: number) {
   }
 
   toggleEstadoOrganismo(id: number) {
-    const organismo = this.organismos.find(o => o.id === id);
+    const organismo = this.organismos.find((o) => o.id === id);
     if (organismo) {
       organismo.estado = !organismo.estado;
       this.organismosSubject.next([...this.organismos]);
@@ -434,109 +510,112 @@ toggleEstadoTematica(id: number) {
     return null;
   }
 
-// ===== MÉTODOS PARA PROVINCIAS =====
-getProvincias(): Observable<any[]> {
-  return this.provinciasSubject.asObservable();
-}
+  // ===== MÉTODOS PARA PROVINCIAS =====
+  getProvincias(): Observable<any[]> {
+    return this.provinciasSubject.asObservable();
+  }
 
-createProvincia(data: any) {
-  const nuevoId = this.provincias.length ? Math.max(...this.provincias.map(p => p.id)) + 1 : 1;
-  const nueva = {
-    ...data,
-    id: nuevoId,
-    fechaModificacion: new Date(),
-    ultimousuario: '#999'  // simulamos ID usuario
-  };
-  this.provincias.push(nueva);
-  this.provinciasSubject.next([...this.provincias]);
-  return nueva;
-}
-
-updateProvincia(data: any) {
-  const index = this.provincias.findIndex(p => p.id === data.id);
-  if (index !== -1) {
-    this.provincias[index] = {
-      ...this.provincias[index],
+  createProvincia(data: any) {
+    const nuevoId = this.provincias.length
+      ? Math.max(...this.provincias.map((p) => p.id)) + 1
+      : 1;
+    const nueva = {
       ...data,
+      id: nuevoId,
       fechaModificacion: new Date(),
-      ultimousuario: '#999'
+      ultimousuario: '#999', // simulamos ID usuario
     };
+    this.provincias.push(nueva);
     this.provinciasSubject.next([...this.provincias]);
-    return this.provincias[index];
+    return nueva;
   }
-  return null;
-}
 
-deleteProvincia(id: number) {
-  const index = this.provincias.findIndex(p => p.id === id);
-  if (index !== -1) {
-    this.provincias.splice(index, 1);
-    this.provinciasSubject.next([...this.provincias]);
-    return true;
+  updateProvincia(data: any) {
+    const index = this.provincias.findIndex((p) => p.id === data.id);
+    if (index !== -1) {
+      this.provincias[index] = {
+        ...this.provincias[index],
+        ...data,
+        fechaModificacion: new Date(),
+        ultimousuario: '#999',
+      };
+      this.provinciasSubject.next([...this.provincias]);
+      return this.provincias[index];
+    }
+    return null;
   }
-  return false;
-}
 
-toggleEstadoProvincia(id: number) {
-  const provincia = this.provincias.find(p => p.id === id);
-  if (provincia) {
-    provincia.estado = !provincia.estado;
-    this.provinciasSubject.next([...this.provincias]);
-    return provincia.estado;
+  deleteProvincia(id: number) {
+    const index = this.provincias.findIndex((p) => p.id === id);
+    if (index !== -1) {
+      this.provincias.splice(index, 1);
+      this.provinciasSubject.next([...this.provincias]);
+      return true;
+    }
+    return false;
   }
-  return null;
-}
-// ===== MÉTODOS PARA REGLAS POR DOMINIO =====
-getReglasPorDominio(): Observable<any[]> {
-  return this.reglasPorDominioSubject.asObservable();
-}
 
-createReglaPorDominio(data: any) {
-  const nuevoId = this.reglasPorDominio.length ? Math.max(...this.reglasPorDominio.map(i => i.id)) + 1 : 1;
-  const nueva = {
-    ...data,
-    id: nuevoId,
-    fechaModificacion: new Date(),
-    ultimousuario: '#999'  // simulamos ID usuario
-  };
-  this.reglasPorDominio.push(nueva);
-  this.reglasPorDominioSubject.next([...this.reglasPorDominio]);
-  return nueva;
-}
+  toggleEstadoProvincia(id: number) {
+    const provincia = this.provincias.find((p) => p.id === id);
+    if (provincia) {
+      provincia.estado = !provincia.estado;
+      this.provinciasSubject.next([...this.provincias]);
+      return provincia.estado;
+    }
+    return null;
+  }
+  // ===== MÉTODOS PARA REGLAS POR DOMINIO =====
+  getReglasPorDominio(): Observable<any[]> {
+    return this.reglasPorDominioSubject.asObservable();
+  }
 
-updateReglaPorDominio(data: any) {
-  const index = this.reglasPorDominio.findIndex(r => r.id === data.id);
-  if (index !== -1) {
-    this.reglasPorDominio[index] = {
-      ...this.reglasPorDominio[index],
+  createReglaPorDominio(data: any) {
+    const nuevoId = this.reglasPorDominio.length
+      ? Math.max(...this.reglasPorDominio.map((i) => i.id)) + 1
+      : 1;
+    const nueva = {
       ...data,
+      id: nuevoId,
       fechaModificacion: new Date(),
-      ultimousuario: '#999'
+      ultimousuario: '#999', // simulamos ID usuario
     };
+    this.reglasPorDominio.push(nueva);
     this.reglasPorDominioSubject.next([...this.reglasPorDominio]);
-    return this.reglasPorDominio[index];
+    return nueva;
   }
-  return null;
-}
 
-deleteReglaPorDominio(id: number) {
-  const index = this.reglasPorDominio.findIndex(r => r.id === id);
-  if (index !== -1) {
-    this.reglasPorDominio.splice(index, 1);
-    this.reglasPorDominioSubject.next([...this.reglasPorDominio]);
-    return true;
+  updateReglaPorDominio(data: any) {
+    const index = this.reglasPorDominio.findIndex((r) => r.id === data.id);
+    if (index !== -1) {
+      this.reglasPorDominio[index] = {
+        ...this.reglasPorDominio[index],
+        ...data,
+        fechaModificacion: new Date(),
+        ultimousuario: '#999',
+      };
+      this.reglasPorDominioSubject.next([...this.reglasPorDominio]);
+      return this.reglasPorDominio[index];
+    }
+    return null;
   }
-  return false;
-}
 
-toggleEstadoReglaPorDominio(id: number) {
-  const regla = this.reglasPorDominio.find(r => r.id === id);
-  if (regla) {
-    regla.estado = !regla.estado;
-    this.reglasPorDominioSubject.next([...this.reglasPorDominio]);
-    return regla.estado;
+  deleteReglaPorDominio(id: number) {
+    const index = this.reglasPorDominio.findIndex((r) => r.id === id);
+    if (index !== -1) {
+      this.reglasPorDominio.splice(index, 1);
+      this.reglasPorDominioSubject.next([...this.reglasPorDominio]);
+      return true;
+    }
+    return false;
   }
-  return null;
-}
 
+  toggleEstadoReglaPorDominio(id: number) {
+    const regla = this.reglasPorDominio.find((r) => r.id === id);
+    if (regla) {
+      regla.estado = !regla.estado;
+      this.reglasPorDominioSubject.next([...this.reglasPorDominio]);
+      return regla.estado;
+    }
+    return null;
+  }
 }
