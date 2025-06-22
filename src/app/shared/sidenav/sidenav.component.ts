@@ -12,6 +12,8 @@ import { ProvinciaFormDialogComponent } from '../../modules/configuracion/provin
 import { CausaFormDialogComponent } from '../../modules/configuracion/causas/causa-form-dialog/causa-form-dialog.component';
 import { InstitucionFormDialogComponent } from '../../modules/configuracion/instituciones/institucion-form-dialog/institucion-form-dialog.component';
 import { OrganismoFormDialogComponent } from '../../modules/configuracion/organismos/organismo-form-dialog/organismo-form-dialog.component';
+import { ReglaFormDialogComponent } from '../../modules/configuracion/reglas-por-dominio/regla-form-dialog/regla-form-dialog.component';
+import { TematicaFormDialogComponent } from '../../modules/configuracion/tematicas/tematica-form-dialog/tematica-form-dialog.component';
 
 @Component({
   selector: 'app-sidenav',
@@ -117,6 +119,31 @@ export class SidenavComponent {
             }
           });
         break;
+      case 'tematicas':
+        this.dialog
+          .open(TematicaFormDialogComponent, {
+            width: '450px',
+            data: {
+              modoCreacion: true,
+              tematica: {
+                id: null,
+                nombre: '',
+                descripcion: '',
+                fechaModificacion: null,
+                ultimousuario: '',
+                estado: true,
+              },
+            },
+          })
+          .afterClosed()
+          .subscribe((result) => {
+            if (result && result.nombre?.trim()) {
+              const creada = this.context.createTematica(result);
+              alert(`Nueva temática creada (ID: ${creada.id})`);
+            }
+          });
+        break;
+
       case 'organismos':
         this.dialog
           .open(OrganismoFormDialogComponent, {
@@ -164,6 +191,31 @@ export class SidenavComponent {
             if (result && result.nombre?.trim()) {
               const creada = this.context.createInstitucion(result);
               alert(`Nueva institución creada (ID: ${creada.id})`);
+            }
+          });
+        break;
+      case 'reglas-por-dominio':
+        this.dialog
+          .open(ReglaFormDialogComponent, {
+            width: '450px',
+            data: {
+              modoCreacion: true,
+              regla: {
+                id: null,
+                dominio: '',
+                descripcion: '',
+                idAlcance: '',
+                fechaModificacion: null,
+                ultimousuario: '',
+                estado: true,
+              },
+            },
+          })
+          .afterClosed()
+          .subscribe((result) => {
+            if (result && result.dominio?.trim()) {
+              const creada = this.context.createReglaPorDominio(result);
+              alert(`Nueva regla por dominio creada (ID: ${creada.id})`);
             }
           });
         break;

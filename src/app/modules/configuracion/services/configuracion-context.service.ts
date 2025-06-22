@@ -23,6 +23,26 @@ export class ConfiguracionContextService {
       estado: false
     }
   ];
+  // Datos simulados para tematicas
+  private tematicas = [
+  {
+    id: 1,
+    nombre: 'Salud',
+    descripcion: 'Temas relacionados con la salud pública',
+    fechaModificacion: new Date('2025-06-20T11:00:00'),
+    ultimousuario: '#123',
+    estado: true
+  },
+  {
+    id: 2,
+    nombre: 'Tecnología',
+    descripcion: 'Temas sobre avances tecnológicos',
+    fechaModificacion: new Date('2025-06-19T15:30:00'),
+    ultimousuario: '#456',
+    estado: false
+  }
+];
+
 
   // Datos simulados para causas
   private causas = [
@@ -107,13 +127,34 @@ export class ConfiguracionContextService {
       estado: false
     }
   ];
+  private reglasPorDominio: any[] = [
+  {
+    id: 1,
+    nombre: 'Regla HTTP',
+    descripcion: 'Bloqueo de puertos HTTP inseguros',
+    fechaModificacion: new Date('2025-06-20T10:00:00'),
+    ultimousuario: '#123',
+    estado: true
+  },
+  {
+    id: 2,
+    nombre: 'Regla HTTPS',
+    descripcion: 'Permitir solo conexiones cifradas',
+    fechaModificacion: new Date('2025-06-19T09:30:00'),
+    ultimousuario: '#456',
+    estado: false
+  }
+];
+
 
   // BehaviorSubjects para observables reactivos
   private alcancesSubject = new BehaviorSubject(this.alcances);
+  private reglasPorDominioSubject = new BehaviorSubject<any[]>([...this.reglasPorDominio]);
   private causasSubject = new BehaviorSubject(this.causas);
   private institucionesSubject = new BehaviorSubject(this.instituciones);
   private organismosSubject = new BehaviorSubject(this.organismos);
   private provinciasSubject = new BehaviorSubject(this.provincias); // nuevo BehaviorSubject
+  private tematicasSubject = new BehaviorSubject<any[]>([...this.tematicas]);
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
@@ -181,6 +222,58 @@ export class ConfiguracionContextService {
     }
     return null;
   }
+  // ===== MÉTODOS PARA TEMÁTICAS =====
+getTematicas(): Observable<any[]> {
+  return this.tematicasSubject.asObservable();
+}
+
+createTematica(data: any) {
+  const nuevoId = this.tematicas.length ? Math.max(...this.tematicas.map(i => i.id)) + 1 : 1;
+  const nueva = {
+    ...data,
+    id: nuevoId,
+    fechaModificacion: new Date(),
+    ultimousuario: '#999'  // simulamos ID usuario
+  };
+  this.tematicas.push(nueva);
+  this.tematicasSubject.next([...this.tematicas]);
+  return nueva;
+}
+
+updateTematica(data: any) {
+  const index = this.tematicas.findIndex(t => t.id === data.id);
+  if (index !== -1) {
+    this.tematicas[index] = {
+      ...this.tematicas[index],
+      ...data,
+      fechaModificacion: new Date(),
+      ultimousuario: '#999'
+    };
+    this.tematicasSubject.next([...this.tematicas]);
+    return this.tematicas[index];
+  }
+  return null;
+}
+
+deleteTematica(id: number) {
+  const index = this.tematicas.findIndex(t => t.id === id);
+  if (index !== -1) {
+    this.tematicas.splice(index, 1);
+    this.tematicasSubject.next([...this.tematicas]);
+    return true;
+  }
+  return false;
+}
+
+toggleEstadoTematica(id: number) {
+  const tematica = this.tematicas.find(t => t.id === id);
+  if (tematica) {
+    tematica.estado = !tematica.estado;
+    this.tematicasSubject.next([...this.tematicas]);
+    return tematica.estado;
+  }
+  return null;
+}
 
   // ===== MÉTODOS PARA CAUSAS =====
   getCausas(): Observable<any[]> {
@@ -390,6 +483,58 @@ toggleEstadoProvincia(id: number) {
     provincia.estado = !provincia.estado;
     this.provinciasSubject.next([...this.provincias]);
     return provincia.estado;
+  }
+  return null;
+}
+// ===== MÉTODOS PARA REGLAS POR DOMINIO =====
+getReglasPorDominio(): Observable<any[]> {
+  return this.reglasPorDominioSubject.asObservable();
+}
+
+createReglaPorDominio(data: any) {
+  const nuevoId = this.reglasPorDominio.length ? Math.max(...this.reglasPorDominio.map(i => i.id)) + 1 : 1;
+  const nueva = {
+    ...data,
+    id: nuevoId,
+    fechaModificacion: new Date(),
+    ultimousuario: '#999'  // simulamos ID usuario
+  };
+  this.reglasPorDominio.push(nueva);
+  this.reglasPorDominioSubject.next([...this.reglasPorDominio]);
+  return nueva;
+}
+
+updateReglaPorDominio(data: any) {
+  const index = this.reglasPorDominio.findIndex(r => r.id === data.id);
+  if (index !== -1) {
+    this.reglasPorDominio[index] = {
+      ...this.reglasPorDominio[index],
+      ...data,
+      fechaModificacion: new Date(),
+      ultimousuario: '#999'
+    };
+    this.reglasPorDominioSubject.next([...this.reglasPorDominio]);
+    return this.reglasPorDominio[index];
+  }
+  return null;
+}
+
+deleteReglaPorDominio(id: number) {
+  const index = this.reglasPorDominio.findIndex(r => r.id === id);
+  if (index !== -1) {
+    this.reglasPorDominio.splice(index, 1);
+    this.reglasPorDominioSubject.next([...this.reglasPorDominio]);
+    return true;
+  }
+  return false;
+}
+
+toggleEstadoReglaPorDominio(id: number) {
+  const regla = this.reglasPorDominio.find(r => r.id === id);
+  if (regla) {
+    regla.estado = !regla.estado;
+    this.reglasPorDominioSubject.next([...this.reglasPorDominio]);
+    return regla.estado;
   }
   return null;
 }

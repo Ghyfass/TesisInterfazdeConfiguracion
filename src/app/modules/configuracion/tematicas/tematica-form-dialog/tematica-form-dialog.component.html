@@ -1,1 +1,24 @@
-<p>tematica-form-dialog works!</p>
+<h2 mat-dialog-title>{{ modoCreacion ? 'Crear Temática' : 'Editar Temática' }}</h2>
+
+<form #form="ngForm" (ngSubmit)="guardar(form)" class="p-3">
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Nombre</mat-label>
+    <input matInput required name="nombre" [(ngModel)]="tematica.nombre" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput name="descripcion" [(ngModel)]="tematica.descripcion"></textarea>
+  </mat-form-field>
+
+  <mat-slide-toggle name="estado" [(ngModel)]="tematica.estado">
+    Activa
+  </mat-slide-toggle>
+
+  <div class="mt-4 d-flex justify-content-end gap-2">
+    <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="!form.form.valid">
+      {{ modoCreacion ? 'Crear' : 'Guardar' }}
+    </button>
+  </div>
+</form>
