@@ -27,7 +27,7 @@
 
 /* Color Palenight (estilo VSCode Theme) */
 .bg-palenight {
-  background-color: #24293f; /* tono base púrpura oscuro */
+  background-color: #232b50; /* tono base púrpura oscuro */
   color: #ffffff;
 }
 
@@ -61,6 +61,7 @@
 @media (max-width: 991.98px) {
   #sidebar {
     width: 80vw;
+    padding: auto;
   }
 
   .content {
@@ -73,7 +74,7 @@
 @media (min-width: 992px) {
   .content {
     margin-left: 250px;
-    padding: 1rem;
+    padding: auto;
     max-width: 1200px;
     margin-right: auto;
   }

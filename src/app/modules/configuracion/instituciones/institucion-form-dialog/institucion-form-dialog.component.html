@@ -1,1 +1,27 @@
-<p>institucion-form-dialog works!</p>
+<h2 mat-dialog-title>{{ modoCreacion ? 'Nueva Institución' : 'Editar Institución' }}</h2>
+
+<div mat-dialog-content>
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="institucion.nombre" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>ID del Organismo</mat-label>
+    <input matInput [(ngModel)]="institucion.idOrganismo" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100 mb-3">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput rows="3" [(ngModel)]="institucion.descripcion"></textarea>
+  </mat-form-field>
+
+  <!-- Campo ultimousuario no visible ni editable -->
+
+  <mat-slide-toggle [(ngModel)]="institucion.estado">Activo</mat-slide-toggle>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="guardar()">Guardar</button>
+</div>

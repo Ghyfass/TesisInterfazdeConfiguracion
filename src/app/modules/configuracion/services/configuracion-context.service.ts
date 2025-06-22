@@ -1,35 +1,37 @@
-// src/app/modules/configuracion/services/configuracion-context.service.ts
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfiguracionContextService {
+  // Datos simulados para alcances
   private alcances = [
     {
       id: 1,
       nombre: 'Alcance 1',
       fechaModificacion: new Date('2025-06-18T15:30:00'),
-      usuarioModificacion: 123,
+      usuarioModificacion: '#123',
       estado: true
     },
     {
       id: 2,
       nombre: 'Alcance 2',
       fechaModificacion: new Date('2025-06-17T10:20:00'),
-      usuarioModificacion: 456,
+      usuarioModificacion: '#456',
       estado: false
     }
   ];
 
+  // Datos simulados para causas
   private causas = [
     {
       id: 1,
       titulo: 'Fallo técnico',
       descripcion: 'Problema con el servidor DNS',
       fechaModificacion: new Date('2025-06-15T11:00:00'),
-      ultimousuario: 'admin',
+      ultimousuario: '#123',
       estado: true
     },
     {
@@ -37,10 +39,81 @@ export class ConfiguracionContextService {
       titulo: 'Actualización programada',
       descripcion: 'Mantenimiento mensual del sistema',
       fechaModificacion: new Date('2025-06-10T08:45:00'),
-      ultimousuario: 'editor1',
+      ultimousuario: '#456',
       estado: false
     }
   ];
+
+  // Datos simulados para instituciones
+  private instituciones = [
+    {
+      id: 1,
+      nombre: 'Instituto Nacional de Salud',
+      idOrganismo: 101,
+      descripcion: 'Entidad de investigación en salud pública',
+      fechaModificacion: new Date('2025-06-16T14:30:00'),
+      ultimousuario: '#123',
+      estado: true
+    },
+    {
+      id: 2,
+      nombre: 'Universidad de Tecnología',
+      idOrganismo: 102,
+      descripcion: 'Formación universitaria en áreas tecnológicas',
+      fechaModificacion: new Date('2025-06-14T09:10:00'),
+      ultimousuario: '#456',
+      estado: false
+    }
+  ];
+
+  // Datos simulados para organismos
+  private organismos = [
+    {
+      id: 1,
+      nombre: 'Organismo A',
+      descripcion: 'Descripción del Organismo A',
+      fechaModificacion: new Date('2025-06-20T12:00:00'),
+      ultimousuario: '#123',
+      estado: true
+    },
+    {
+      id: 2,
+      nombre: 'Organismo B',
+      descripcion: 'Descripción del Organismo B',
+      fechaModificacion: new Date('2025-06-19T09:30:00'),
+      ultimousuario: '#456',
+      estado: false
+    }
+  ];
+
+  // Datos simulados para provincias (nuevo)
+  private provincias = [
+    {
+      id: 1,
+      nombre: 'Provincia A',
+      codigo: '#01',
+      fechaModificacion: new Date('2025-06-19T13:00:00'),
+      ultimoUsuario: '#123',
+      ultimousuario: '#456',
+      estado: true
+
+    },
+    {
+      id: 2,
+      nombre: 'Provincia B',
+      codigo: '#02',
+      fechaModificacion: new Date('2025-06-18T09:30:00'),
+      ultimousuario: '#457',
+      estado: false
+    }
+  ];
+
+  // BehaviorSubjects para observables reactivos
+  private alcancesSubject = new BehaviorSubject(this.alcances);
+  private causasSubject = new BehaviorSubject(this.causas);
+  private institucionesSubject = new BehaviorSubject(this.instituciones);
+  private organismosSubject = new BehaviorSubject(this.organismos);
+  private provinciasSubject = new BehaviorSubject(this.provincias); // nuevo BehaviorSubject
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
@@ -57,8 +130,8 @@ export class ConfiguracionContextService {
   }
 
   // ===== MÉTODOS PARA ALCANCES =====
-  getAlcances() {
-    return [...this.alcances];
+  getAlcances(): Observable<any[]> {
+    return this.alcancesSubject.asObservable();
   }
 
   createAlcance(data: any) {
@@ -67,9 +140,10 @@ export class ConfiguracionContextService {
       ...data,
       id: nuevoId,
       fechaModificacion: new Date(),
-      usuarioModificacion: 999
+      usuarioModificacion: '#999'  // simulamos ID usuario
     };
     this.alcances.push(nuevo);
+    this.alcancesSubject.next([...this.alcances]);
     return nuevo;
   }
 
@@ -79,8 +153,10 @@ export class ConfiguracionContextService {
       this.alcances[index] = {
         ...this.alcances[index],
         ...data,
-        fechaModificacion: new Date()
+        fechaModificacion: new Date(),
+        usuarioModificacion: '#999'  // simulamos ID usuario
       };
+      this.alcancesSubject.next([...this.alcances]);
       return this.alcances[index];
     }
     return null;
@@ -90,6 +166,7 @@ export class ConfiguracionContextService {
     const index = this.alcances.findIndex(a => a.id === id);
     if (index !== -1) {
       this.alcances.splice(index, 1);
+      this.alcancesSubject.next([...this.alcances]);
       return true;
     }
     return false;
@@ -99,14 +176,15 @@ export class ConfiguracionContextService {
     const alcance = this.alcances.find(a => a.id === id);
     if (alcance) {
       alcance.estado = !alcance.estado;
+      this.alcancesSubject.next([...this.alcances]);
       return alcance.estado;
     }
     return null;
   }
 
   // ===== MÉTODOS PARA CAUSAS =====
-  getCausas() {
-    return [...this.causas];
+  getCausas(): Observable<any[]> {
+    return this.causasSubject.asObservable();
   }
 
   createCausa(data: any) {
@@ -115,9 +193,10 @@ export class ConfiguracionContextService {
       ...data,
       id: nuevoId,
       fechaModificacion: new Date(),
-      ultimousuario: 'admin'
+      ultimousuario: '#999'  // simulamos ID usuario
     };
     this.causas.push(nueva);
+    this.causasSubject.next([...this.causas]);
     return nueva;
   }
 
@@ -127,8 +206,10 @@ export class ConfiguracionContextService {
       this.causas[index] = {
         ...this.causas[index],
         ...data,
-        fechaModificacion: new Date()
+        fechaModificacion: new Date(),
+        ultimousuario: '#999'  // simulamos ID usuario
       };
+      this.causasSubject.next([...this.causas]);
       return this.causas[index];
     }
     return null;
@@ -138,6 +219,7 @@ export class ConfiguracionContextService {
     const index = this.causas.findIndex(c => c.id === id);
     if (index !== -1) {
       this.causas.splice(index, 1);
+      this.causasSubject.next([...this.causas]);
       return true;
     }
     return false;
@@ -147,8 +229,169 @@ export class ConfiguracionContextService {
     const causa = this.causas.find(c => c.id === id);
     if (causa) {
       causa.estado = !causa.estado;
+      this.causasSubject.next([...this.causas]);
       return causa.estado;
     }
     return null;
   }
+
+  // ===== MÉTODOS PARA INSTITUCIONES =====
+  getInstituciones(): Observable<any[]> {
+    return this.institucionesSubject.asObservable();
+  }
+
+  createInstitucion(data: any) {
+    const nuevoId = this.instituciones.length ? Math.max(...this.instituciones.map(i => i.id)) + 1 : 1;
+    const nueva = {
+      ...data,
+      id: nuevoId,
+      fechaModificacion: new Date(),
+      ultimousuario: '#999'  // simulamos ID usuario
+    };
+    this.instituciones.push(nueva);
+    this.institucionesSubject.next([...this.instituciones]);
+    return nueva;
+  }
+
+  updateInstitucion(data: any) {
+    const index = this.instituciones.findIndex(i => i.id === data.id);
+    if (index !== -1) {
+      this.instituciones[index] = {
+        ...this.instituciones[index],
+        ...data,
+        fechaModificacion: new Date(),
+        ultimousuario: '#999'  // simulamos ID usuario
+      };
+      this.institucionesSubject.next([...this.instituciones]);
+      return this.instituciones[index];
+    }
+    return null;
+  }
+
+  deleteInstitucion(id: number) {
+    const index = this.instituciones.findIndex(i => i.id === id);
+    if (index !== -1) {
+      this.instituciones.splice(index, 1);
+      this.institucionesSubject.next([...this.instituciones]);
+      return true;
+    }
+    return false;
+  }
+
+  toggleEstadoInstitucion(id: number) {
+    const institucion = this.instituciones.find(i => i.id === id);
+    if (institucion) {
+      institucion.estado = !institucion.estado;
+      this.institucionesSubject.next([...this.instituciones]);
+      return institucion.estado;
+    }
+    return null;
+  }
+
+  // ===== MÉTODOS PARA ORGANISMOS =====
+  getOrganismos(): Observable<any[]> {
+    return this.organismosSubject.asObservable();
+  }
+
+  createOrganismo(data: any) {
+    const nuevoId = this.organismos.length ? Math.max(...this.organismos.map(i => i.id)) + 1 : 1;
+    const nuevo = {
+      ...data,
+      id: nuevoId,
+      fechaModificacion: new Date(),
+      ultimousuario: '#999'  // simulamos ID usuario
+    };
+    this.organismos.push(nuevo);
+    this.organismosSubject.next([...this.organismos]);
+    return nuevo;
+  }
+
+  updateOrganismo(data: any) {
+    const index = this.organismos.findIndex(o => o.id === data.id);
+    if (index !== -1) {
+      this.organismos[index] = {
+        ...this.organismos[index],
+        ...data,
+        fechaModificacion: new Date(),
+        ultimousuario: '#999'  // simulamos ID usuario
+      };
+      this.organismosSubject.next([...this.organismos]);
+      return this.organismos[index];
+    }
+    return null;
+  }
+
+  deleteOrganismo(id: number) {
+    const index = this.organismos.findIndex(o => o.id === id);
+    if (index !== -1) {
+      this.organismos.splice(index, 1);
+      this.organismosSubject.next([...this.organismos]);
+      return true;
+    }
+    return false;
+  }
+
+  toggleEstadoOrganismo(id: number) {
+    const organismo = this.organismos.find(o => o.id === id);
+    if (organismo) {
+      organismo.estado = !organismo.estado;
+      this.organismosSubject.next([...this.organismos]);
+      return organismo.estado;
+    }
+    return null;
+  }
+
+// ===== MÉTODOS PARA PROVINCIAS =====
+getProvincias(): Observable<any[]> {
+  return this.provinciasSubject.asObservable();
+}
+
+createProvincia(data: any) {
+  const nuevoId = this.provincias.length ? Math.max(...this.provincias.map(p => p.id)) + 1 : 1;
+  const nueva = {
+    ...data,
+    id: nuevoId,
+    fechaModificacion: new Date(),
+    ultimousuario: '#999'  // simulamos ID usuario
+  };
+  this.provincias.push(nueva);
+  this.provinciasSubject.next([...this.provincias]);
+  return nueva;
+}
+
+updateProvincia(data: any) {
+  const index = this.provincias.findIndex(p => p.id === data.id);
+  if (index !== -1) {
+    this.provincias[index] = {
+      ...this.provincias[index],
+      ...data,
+      fechaModificacion: new Date(),
+      ultimousuario: '#999'
+    };
+    this.provinciasSubject.next([...this.provincias]);
+    return this.provincias[index];
+  }
+  return null;
+}
+
+deleteProvincia(id: number) {
+  const index = this.provincias.findIndex(p => p.id === id);
+  if (index !== -1) {
+    this.provincias.splice(index, 1);
+    this.provinciasSubject.next([...this.provincias]);
+    return true;
+  }
+  return false;
+}
+
+toggleEstadoProvincia(id: number) {
+  const provincia = this.provincias.find(p => p.id === id);
+  if (provincia) {
+    provincia.estado = !provincia.estado;
+    this.provinciasSubject.next([...this.provincias]);
+    return provincia.estado;
+  }
+  return null;
+}
+
 }

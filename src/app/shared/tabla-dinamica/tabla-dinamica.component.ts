@@ -35,15 +35,17 @@ export class TablaDinamicaComponent {
   }
 
   onEliminar(element: any) {
-  this.eliminar.emit(element);
-}
+    this.eliminar.emit(element);
+  }
 
   getNombreColumna(col: string): string {
     switch (col) {
       case 'id': return 'ID';
       case 'nombre': return 'Nombre';
       case 'descripcion': return 'Descripción';
+      case 'codigo': return 'Código'; // agregado para Provincias
       case 'fechaModificacion': return 'Fecha de Modificación';
+      case 'ultimousuario': return 'ID Usuario';
       case 'usuarioModificacion': return 'ID Usuario';
       case 'estado': return 'Estado';
       case 'acciones': return 'Acciones';

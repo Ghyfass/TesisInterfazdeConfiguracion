@@ -43,11 +43,10 @@ export class AlcancesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.cargarDatos();
-  }
-
-  cargarDatos() {
-    this.alcances = this.configService.getAlcances();
+    // Suscribimos para actualizar automáticamente al cambiar datos
+    this.configService.getAlcances().subscribe(datos => {
+      this.alcances = datos;
+    });
   }
 
   get dataFiltrada() {
@@ -67,8 +66,7 @@ export class AlcancesComponent implements OnInit {
       if (result) {
         const actualizado = this.configService.updateAlcance(result);
         if (actualizado) {
-          this.snackBar.open('Alcance actualizado (simulado)', 'Cerrar', { duration: 2500 });
-          this.cargarDatos();
+          this.snackBar.open('Alcance actualizado', 'Cerrar', { duration: 2500 });
         }
       }
     });
@@ -89,16 +87,14 @@ export class AlcancesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.nombre.trim() !== '') {
         this.configService.createAlcance(result);
-        this.snackBar.open('Nuevo alcance creado (simulado)', 'Cerrar', { duration: 2500 });
-        this.cargarDatos();
+        this.snackBar.open('Nuevo alcance creado', 'Cerrar', { duration: 2500 });
       }
     });
   }
 
   toggleEstado(item: any) {
     const nuevoEstado = this.configService.toggleEstadoAlcance(item.id);
-    this.snackBar.open(`Estado cambiado a ${nuevoEstado ? 'activo' : 'inactivo'} (simulado)`, 'Cerrar', { duration: 2500 });
-    this.cargarDatos();
+    this.snackBar.open(`Estado cambiado a ${nuevoEstado ? 'activo' : 'inactivo'}`, 'Cerrar', { duration: 2500 });
   }
 
   eliminar(item: any) {
@@ -110,8 +106,7 @@ export class AlcancesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirmado => {
       if (confirmado) {
         this.configService.deleteAlcance(item.id);
-        this.snackBar.open('Alcance eliminado (simulado)', 'Cerrar', { duration: 2500 });
-        this.cargarDatos();
+        this.snackBar.open('Alcance eliminado', 'Cerrar', { duration: 2500 });
       }
     });
   }

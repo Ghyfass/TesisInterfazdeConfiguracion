@@ -10,13 +10,15 @@ import { ConfiguracionContextService } from '../../modules/configuracion/service
 import { AlcanceFormDialogComponent } from '../../modules/configuracion/alcances/alcance-form-dialog/alcance-form-dialog.component';
 import { ProvinciaFormDialogComponent } from '../../modules/configuracion/provincias/provincia-form-dialog/provincia-form-dialog.component';
 import { CausaFormDialogComponent } from '../../modules/configuracion/causas/causa-form-dialog/causa-form-dialog.component';
+import { InstitucionFormDialogComponent } from '../../modules/configuracion/instituciones/institucion-form-dialog/institucion-form-dialog.component';
+import { OrganismoFormDialogComponent } from '../../modules/configuracion/organismos/organismo-form-dialog/organismo-form-dialog.component';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
   imports: [RouterModule, NgIf, MatDialogModule],
   templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.css']
+  styleUrls: ['./sidenav.component.css'],
 })
 export class SidenavComponent {
   sidebarOpen = true;
@@ -27,9 +29,9 @@ export class SidenavComponent {
     private dialog: MatDialog,
     private context: ConfiguracionContextService
   ) {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => this.detectSubcategory());
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => this.detectSubcategory());
 
     this.detectSubcategory();
   }
@@ -52,53 +54,124 @@ export class SidenavComponent {
 
     switch (this.currentSubcategory) {
       case 'alcances':
-        this.dialog.open(AlcanceFormDialogComponent, {
-          width: '400px',
-          data: { modoCreacion: true }
-        }).afterClosed().subscribe(result => {
-          if (result && result.nombre?.trim()) {
-            const creado = this.context.createAlcance(result);
-            alert(`Nuevo alcance creado (ID: ${creado.id})`);
-          }
-        });
+        this.dialog
+          .open(AlcanceFormDialogComponent, {
+            width: '400px',
+            data: { modoCreacion: true },
+          })
+          .afterClosed()
+          .subscribe((result) => {
+            if (result && result.nombre?.trim()) {
+              const creado = this.context.createAlcance(result);
+              alert(`Nuevo alcance creado (ID: ${creado.id})`);
+            }
+          });
         break;
 
       case 'provincias':
-        this.dialog.open(ProvinciaFormDialogComponent, {
-          width: '400px',
-          data: { modoCreacion: true }
-        }).afterClosed().subscribe(result => {
-          if (result && result.nombre?.trim()) {
-            // Agrega aquí el método correspondiente cuando se implemente en el servicio
-            alert('Nueva provincia creada correctamente');
-          }
-        });
+        this.dialog
+          .open(ProvinciaFormDialogComponent, {
+            width: '450px',
+            data: {
+              modoCreacion: true,
+              provincia: {
+                id: null,
+                nombre: '',
+                descripcion: '',
+                fechaModificacion: null,
+                ultimousuario: '',
+                estado: true,
+              },
+            },
+          })
+          .afterClosed()
+          .subscribe((result) => {
+            if (result && result.nombre?.trim()) {
+              const creada = this.context.createProvincia(result);
+              alert(`Nueva provincia creada (ID: ${creada.id})`);
+            }
+          });
         break;
 
       case 'causas':
-        this.dialog.open(CausaFormDialogComponent, {
-          width: '450px',
-          data: {
-            modoCreacion: true,
-            causa: {
-              id: null,
-              titulo: '',
-              descripcion: '',
-              fechaModificacion: null,
-              ultimousuario: '',
-              estado: true
+        this.dialog
+          .open(CausaFormDialogComponent, {
+            width: '450px',
+            data: {
+              modoCreacion: true,
+              causa: {
+                id: null,
+                titulo: '',
+                descripcion: '',
+                fechaModificacion: null,
+                ultimousuario: '',
+                estado: true,
+              },
+            },
+          })
+          .afterClosed()
+          .subscribe((result) => {
+            if (result && result.titulo?.trim()) {
+              const creada = this.context.createCausa(result);
+              alert(`Nueva causa creada (ID: ${creada.id})`);
             }
-          }
-        }).afterClosed().subscribe(result => {
-          if (result && result.titulo?.trim()) {
-            const creada = this.context.createCausa(result);
-            alert(`Nueva causa creada (ID: ${creada.id})`);
-          }
-        });
+          });
+        break;
+      case 'organismos':
+        this.dialog
+          .open(OrganismoFormDialogComponent, {
+            width: '450px',
+            data: {
+              modoCreacion: true,
+              organismo: {
+                id: null,
+                nombre: '',
+                descripcion: '',
+                estado: true,
+                fechaModificacion: null,
+                ultimousuario: '',
+              },
+            },
+          })
+          .afterClosed()
+          .subscribe((result) => {
+            if (result && result.nombre?.trim()) {
+              const creado = this.context.createOrganismo(result);
+              alert(`Nuevo organismo creado (ID: ${creado.id})`);
+            }
+          });
+        break;
+
+      case 'instituciones':
+        this.dialog
+          .open(InstitucionFormDialogComponent, {
+            width: '450px',
+            data: {
+              modoCreacion: true,
+              institucion: {
+                id: null,
+                nombre: '',
+                idOrganismo: '',
+                descripcion: '',
+                fechaModificacion: null,
+                ultimousuario: '',
+                estado: true,
+              },
+            },
+          })
+          .afterClosed()
+          .subscribe((result) => {
+            if (result && result.nombre?.trim()) {
+              const creada = this.context.createInstitucion(result);
+              alert(`Nueva institución creada (ID: ${creada.id})`);
+            }
+          });
         break;
 
       default:
-        alert(`Crear nuevo elemento en "${this.currentSubcategory}" no está implementado.`);
+        alert(
+          `Crear nuevo elemento en "${this.currentSubcategory}" no está implementado.`
+        );
         break;
     }
   }

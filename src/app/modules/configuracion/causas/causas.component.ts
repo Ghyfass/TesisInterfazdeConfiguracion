@@ -45,11 +45,10 @@ export class CausasComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.cargarDatos();
-  }
-
-  cargarDatos(): void {
-    this.dataSource = this.context.getCausas();
+    // Nos suscribimos para actualizar automáticamente cuando cambian las causas
+    this.context.getCausas().subscribe(datos => {
+      this.dataSource = datos;
+    });
   }
 
   get dataFiltrada() {
@@ -80,7 +79,6 @@ export class CausasComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.titulo.trim() !== '') {
         this.context.createCausa(result);
-        this.cargarDatos();
         this.snackBar.open('Nueva causa creada', 'Cerrar', { duration: 2500 });
       }
     });
@@ -98,7 +96,6 @@ export class CausasComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.context.updateCausa(result);
-        this.cargarDatos();
         this.snackBar.open('Causa actualizada', 'Cerrar', { duration: 2500 });
       }
     });
@@ -113,7 +110,6 @@ export class CausasComponent implements OnInit {
     dialogRef.afterClosed().subscribe(confirmado => {
       if (confirmado) {
         this.context.deleteCausa(item.id);
-        this.cargarDatos();
         this.snackBar.open('Causa eliminada', 'Cerrar', { duration: 2500 });
       }
     });
@@ -121,7 +117,6 @@ export class CausasComponent implements OnInit {
 
   toggleEstado(item: any) {
     this.context.toggleEstadoCausa(item.id);
-    this.cargarDatos();
     this.snackBar.open(`Estado cambiado`, 'Cerrar', { duration: 2500 });
   }
 }
